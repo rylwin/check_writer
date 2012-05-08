@@ -18,8 +18,8 @@ Jeweler::Tasks.new do |gem|
   gem.name = "check_writer"
   gem.homepage = "http://github.com/rylwin/check_writer"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
+  gem.summary = %Q{Generate PDF checks}
+  gem.description = %Q{Ruby library for generating PDF checks that you can take to the bank}
   gem.email = "ryan@thewinograds.com"
   gem.authors = ["Ryan Winograd"]
   # dependencies defined in Gemfile
