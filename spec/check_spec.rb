@@ -69,4 +69,22 @@ describe "CheckWriter::Check" do
     end
   end
 
+  context "#to_prawn" do
+    it "returns a prawn object" do
+      @check.to_prawn.should be_a_kind_of(Prawn::Document)
+    end
+
+    it "can be used to print multiple checks" do
+      pdf = @check.to_prawn
+      pdf.start_new_page
+      pdf = @check.to_prawn(pdf)
+      @data = pdf.render
+
+      # Use this line to re-write the PDF we test against
+      # write_content_to_file('two_in_one', @data)
+
+      assert_data_matches_file_content('two_in_one', @data)
+    end
+  end
+
 end

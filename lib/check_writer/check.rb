@@ -1,5 +1,6 @@
 module CheckWriter
 
+  # Check generates checks as a PDF
   class Check
 
     include CheckWriter::AttributeFormatting
@@ -21,11 +22,17 @@ module CheckWriter
       _assign_attributes(attributes)
     end
 
+    # Renders the check as a pdf and returns the pdf data
     def to_pdf
       to_prawn.render
     end
 
-    # TODO: test and document
+    # Renders the check and returns the Prawn::Document for 
+    # further manipulation.
+    #
+    # To use an existing Prawn::Document, pass this in as the
+    # +pdf+ argument. If +pdf+ is nil, a new Prawn::Document
+    # will be created.
     def to_prawn(pdf=nil)
       @pdf = pdf||Prawn::Document.new(:bottom_margin => 0.0)
       _generate_check_pdf
