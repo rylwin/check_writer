@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = "check_writer"
-  s.version = "0.0.0"
+  s.version = "0.1.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Ryan Winograd"]
@@ -34,10 +34,17 @@ Gem::Specification.new do |s|
     "gemfiles/prawn0.6.3.gemfile",
     "gemfiles/prawn0.6.3.gemfile.lock",
     "lib/check_writer.rb",
+    "lib/check_writer/attribute_formatting.rb",
     "lib/check_writer/check.rb",
     "spec/assets/test-0.12.0.pdf",
     "spec/assets/test-0.6.1.pdf",
     "spec/assets/test-0.6.3.pdf",
+    "spec/assets/two_in_one-0.12.0.pdf",
+    "spec/assets/two_in_one-0.6.1.pdf",
+    "spec/assets/two_in_one-0.6.3.pdf",
+    "spec/assets/with_stubs-0.12.0.pdf",
+    "spec/assets/with_stubs-0.6.1.pdf",
+    "spec/assets/with_stubs-0.6.3.pdf",
     "spec/check_spec.rb",
     "spec/spec_helper.rb",
     "vendor/GnuMICR-0.30/AUTHORS",
