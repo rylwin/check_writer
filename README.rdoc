@@ -6,9 +6,39 @@ A ruby gem to help generate checks in PDF format.
 
 A version of this code has been used in a production application for a couple of years and we are finally getting around to extracting the check writing code. As we go through this process, there may be significant changes to the API. You've been warned.
 
+Currently the only check stock format that is supported is the 1/3 bottom check. 
+You can get some check stock at Amazon[http://www.amazon.com/gp/product/B002HIV1KQ/ref=as_li_qf_sp_asn_il_tl?ie=UTF8&tag=checkwriter-20&linkCode=as2&camp=1789&creative=9325&creativeASIN=B002HIV1KQ], amongst other places.
+
 == GnuMICR
 
-check_writer uses GnuMICR (http://www.sandeen.net/GnuMICR/) to print the MICR numbers at the bottom of the check. Please read the notes on the GnuMICR site. We have not had any issues using this font (2+ years now), but that is no guarantee.
+check_writer uses GnuMICR (http://www.sandeen.net/GnuMICR) to print the MICR numbers at the bottom of the check. Please read the notes on the GnuMICR site. We have not had any issues using this font (2+ years now), but that is no guarantee.
+
+== Example
+
+  @check = CheckWriter::Check.new(
+    :number => '12345',                               # the check number
+    :date => Date.yesterday,                          # Default: today
+
+    :payee_name => 'John Smith',
+    :payee_address => ['Line 1', 'City, State, Zip'], # Array of as many lines as desired
+
+    :payor_name => 'Payor Name',
+    :payor_address => ['Line 1', 'City, State, Zip'],
+
+    :bank_name => 'Bank of America',
+    :bank_address => ['Line 1', 'City, State, Zip'],
+    :bank_fraction => '12-9876/1234',
+
+    :routing_number => '1234567689',
+    :account_number => '123456789',
+
+    :amount => '1003.23',
+    :memo => 'Memo: Void after 60 days'
+  )   
+
+  check.to_pdf # returns PDF file data
+
+Check out spec/assets to see what the output looks like.
 
 == Tests
 
