@@ -2,52 +2,34 @@ module CheckWriter
 
   class Check
 
+    include CheckWriter::AttributeFormatting
+
     attr_accessor :number, :date,
       :payee_name, :payor_name,
       :payee_address, :payor_address, 
       :bank_name, :bank_address, :bank_fraction,
       :routing_number, :account_number, 
-      :amount, :memo
+      :amount, :memo,
+      :with_stubs
 
     def initialize(attributes={})
+      attributes.reverse_merge!(
+        :date => Date.today,
+        :with_stubs => false
+      )
+
       _assign_attributes(attributes)
     end
 
-    def date
-      @date||Date.today
-    end
-
-    # Returns an integer representing the number of cents of the amount
-    #
-    # amount = 3.23 => 23
-    def cents
-      ((amount.to_f - dollars) * 100).to_i
-    end
-
-    # Returns an integer representing the number of dollars of the amount
-    #
-    # amount = 3.23 => 3
-    def dollars
-      amount.to_i
-    end
-
-    def formatted_amount
-      separated_dollars = dollars.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1,")
-      "$#{separated_dollars}.#{cents}"
-    end
-
-    def amount_in_words
-      # Wrap cents in string before calling numwords to avoid 
-      # SafeBuffer cannot modify string in place error
-      cents = "#{self.cents}".en.numwords
-
-      "#{dollars.en.numwords} Dollars and #{cents} Cents".titleize
-    end
-
     def to_pdf
-      @pdf = Prawn::Document.new(:bottom_margin => 0.0)
+      to_prawn.render
+    end
+
+    # TODO: test and document
+    def to_prawn(pdf=nil)
+      @pdf = pdf||Prawn::Document.new(:bottom_margin => 0.0)
       _generate_check_pdf
-      @pdf.render
+      @pdf
     end
 
     private
@@ -60,8 +42,11 @@ module CheckWriter
 
     def _generate_check_pdf
       @pdf.move_down(between_box_height/4.0)
-      #check_stub(true)
-      #check_stub(false)
+
+      if with_stubs
+        check_stub(true) # top 1/3 stub
+        check_stub(false) # middle 1/3 stub
+      end
 
       @pdf.bounding_box [@pdf.bounds.left,@pdf.bounds.top - extra_top_margin_height - box_height*2 - between_box_height*2], 
         :width => @pdf.bounds.right - @pdf.bounds.left, :height => check_box_height do
@@ -72,7 +57,6 @@ module CheckWriter
 
         bank
         payor
-        #property_name
         date_and_amount_and_memo
         _payee_address
         signature
@@ -92,48 +76,29 @@ module CheckWriter
       return [@pdf.bounds.left, center_y + 2], [@pdf.bounds.right, center_y + 2]
     end
 
-    def info_box(title, value, width, offset = 0)
-      @pdf.bounding_box [@pdf.bounds.left + 8 + offset, @pdf.bounds.top - 2], :width => width - 8 do
-        @pdf.text title, :align => :center 
-        @pdf.move_down 4
-        @pdf.text "#{value}"  
-        @pdf.line center_of_box
-      end  
-    end
-
-    def box_info_row
-      info_box("Property Name", @check.property.name, inches(3.25))
-      info_box("Apt #", @check.unit.unit_number, inches(0.75), inches(3.25))
-      info_box("Description", "Deposit Refund", inches(1.5), inches(4.0))
-      info_box("Move-Out", @check.lease.move_out_date.to_s(:mdy), inches(1), inches(5.5)) if @check.lease.move_out_date
-      info_box("Amount", c(@check.amount), inches(1), inches(6.5))
-    end
-
-    def box_info_block
-      @pdf.bounding_box [@pdf.bounds.left + 8, @pdf.bounds.top - inches(0.55)], :width => inches(7) do
-        @pdf.text "Movein Date: #{@check.lease.move_in_date.to_time.to_s(:mdy)}" if @check.lease.move_in_date
-        @pdf.text "Moveout Notice: #{@check.lease.move_out_notice_date.to_time.to_s(:mdy)}" if @check.lease.move_out_notice_date
-        @pdf.text "Lease Exp. Date: #{@check.lease.expiration_date.to_time.to_s(:mdy)}" if @check.lease.expiration_date
-        @pdf.text "Term: #{@check.lease.term}" 
-        @pdf.text "Moveout Date: #{@check.lease.move_out_date.to_time.to_s(:mdy)}" if @check.lease.move_out_date
-        @pdf.text "Moveout Reason: #{@check.lease.move_out_reason}" if @check.lease.move_out_reason
-        @pdf.text "Processed By: #{@check.refund.employee}" if @check.refund.employee
-        @pdf.text("STOP PAYMENT ON CHECK NO. #{@check.original_check.check_number}", :align => :center) if @check.original_check.present?
-      end
-    end
-
     def box_bottom_row
+      # Payor and payee names
       @pdf.move_to [@pdf.bounds.left, inches(0.5)]
       @pdf.line_to [@pdf.bounds.right, inches(0.5)]
       @pdf.bounding_box [@pdf.bounds.left + 8, inches(0.5) - 6], :width => inches(6.75) do
-        @pdf.text "Payor: #{@check.property}"
-        @pdf.text "Payee: #{@check.lease.signers.join(", ")}"
+        @pdf.text "Payor: #{payor_name}"
+        @pdf.text "Payee: #{payee_name}"
       end
+
+      # Amount
+      @pdf.move_to [@pdf.bounds.right - inches(2), inches(0.5)]
+      @pdf.line_to [@pdf.bounds.right - inches(2), 0]
+      @pdf.bounding_box [@pdf.bounds.left + inches(5.5), inches(0.5) - 6], :width => inches(1), :height => inches(0.5) do
+        @pdf.text "Amount", :align => :center
+        @pdf.text formatted_amount, :align => :center
+      end
+
+      # Check date
       @pdf.move_to [@pdf.bounds.right - inches(1), inches(0.5)]
       @pdf.line_to [@pdf.bounds.right - inches(1), 0]
       @pdf.bounding_box [@pdf.bounds.left + inches(6.5), inches(0.5) - 6], :width => inches(1), :height => inches(0.5) do
         @pdf.text "Date", :align => :center
-        @pdf.text "#{@check.date.to_time.to_s(:mdy) if @check.date}", :align => :center
+        @pdf.text formatted_date, :align => :center
       end
     end
 
@@ -162,15 +127,9 @@ module CheckWriter
       end
     end
 
-    def property_name
-      @pdf.bounding_box [@pdf.bounds.left + inches(0.5), @pdf.bounds.top - inches(0.85)], :width => inches(3.5) do
-        @pdf.text @check.property.name, :font_size => 14
-      end
-    end
-
     def date_and_amount_and_memo
       @pdf.bounding_box [@pdf.bounds.left + inches(4.5), @pdf.bounds.top - inches(1.25)], :width => inches(1) do
-        @pdf.text date.strftime('%B %e, %Y')
+        @pdf.text formatted_date
       end
       @pdf.bounding_box [@pdf.bounds.right - inches(1) - 4, @pdf.bounds.top - inches(1.25)], :width => inches(1) do
         @pdf.text formatted_amount, :align => :right    
@@ -212,8 +171,6 @@ module CheckWriter
       top = top_stub ? @pdf.bounds.top - extra_top_margin_height : @pdf.bounds.top - extra_top_margin_height - box_height - between_box_height
       @pdf.bounding_box [@pdf.bounds.left, top], :width => @pdf.bounds.right - @pdf.bounds.left, :height => box_height do
         @pdf.stroke_bounds
-        box_info_row
-        box_info_block if top_stub
         box_bottom_row
       end
     end

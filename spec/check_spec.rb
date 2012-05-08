@@ -17,6 +17,7 @@ describe "CheckWriter::Check" do
     ]
 
     @check = CheckWriter::Check.new(
+      :date => Date.parse('5/7/2012'),
       :number => '12345',
       :payee_name => 'John Smith',
       :payee_address => payee_address,
@@ -52,6 +53,20 @@ describe "CheckWriter::Check" do
     # write_content_to_file('test', data)
 
     assert_data_matches_file_content('test', data)
+  end
+
+  context "with stubs" do
+    before(:each) do
+      @check.with_stubs = true
+      @data = @check.to_pdf
+    end
+
+    it "generates a pdf with check stubs stroked and some basic info" do
+      # Use this line to re-write the PDF we test against
+      # write_content_to_file('with_stubs', @data)
+
+      assert_data_matches_file_content('with_stubs', @data)
+    end
   end
 
 end
