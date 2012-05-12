@@ -50,7 +50,7 @@ had any issues using this font (2+ years now), but that is no guarantee.
 
 If you set the +with_stubs+ option to +true+ you'll get a bit of formatting
 and information displayed in the top and middle check stub. 
-Here's an example[https://github.com/rylwin/check_writer/raw/master/spec/assets/test-0.12.0.pdf].
+Here's an example[http://github.com/rylwin/check_writer/blob/master/spec/assets/with_stubs-0.12.0.pdf?raw=true].
 
 Instead of just returning a PDF, you can access the Prawn PDF writer object 
 (Prawn::Document), which you can use to further customize the check or even 
