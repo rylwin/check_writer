@@ -85,6 +85,10 @@ After appraisal installs its gemfiles, you can revert your Gemfile to as it was 
 
 == Copyright
 
+Font: The GnuMICR font is distributed under GPL, but please note the additional comments from
+the font creator in the 
+GnuMICR README[https://github.com/rylwin/check_writer/tree/master/vendor/GnuMICR-0.30].
+
 Copyright (c) 2012 Ryan Winograd. See LICENSE.txt for
 further details.
 
