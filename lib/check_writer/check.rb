@@ -164,7 +164,7 @@ module CheckWriter
         @pdf.horizontal_rule
         @pdf.move_down 2
         # TODO: better currency formatting
-        @pdf.text "NOT VALID IF OVER $#{amount}", :size => 8, :align => :center
+        @pdf.text "NOT VALID IF OVER #{formatted_amount}", :size => 8, :align => :center
       end
     end
 

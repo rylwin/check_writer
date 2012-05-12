@@ -22,7 +22,8 @@ module CheckWriter
     # amount = 1000 => $1,000.00
     def formatted_amount
       separated_dollars = dollars.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1,")
-      "$#{separated_dollars}.#{cents}"
+      cents_string = (cents < 10) ? "0#{cents}" : cents
+      "$#{separated_dollars}.#{cents_string}"
     end
 
     # Converts numeric amount of the check into words.

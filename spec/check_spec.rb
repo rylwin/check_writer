@@ -42,6 +42,15 @@ describe "CheckWriter::Check" do
     @check.formatted_amount.should == "$1,003.23"
   end
 
+  context "a check for an amount with 0 cents" do
+    before(:each) do
+      @check.amount = 410.0
+    end
+    it "should includes two zeros in the cents" do
+      @check.formatted_amount.should == "$410.00"
+    end
+  end
+
   it "assigns the number" do
     @check.number.should == '12345'
   end
