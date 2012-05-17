@@ -50,7 +50,12 @@ had any issues using this font (2+ years now), but that is no guarantee.
 
 If you set the +with_stubs+ option to +true+ you'll get a bit of formatting
 and information displayed in the top and middle check stub. 
-Here's an example[http://github.com/rylwin/check_writer/blob/master/spec/assets/with_stubs-0.12.0.pdf?raw=true].
+Here's an example[https://github.com/rylwin/check_writer/raw/master/spec/assets/with_stubs-0.12.0.pdf].
+
+It is also possible to include additional data in the stubs in the form of a table. If +with_stubs+ is true,
+then passing a 2D array to +stub_table_data+ will generate a table within each stub. To pass options to Prawn's
+#table method, set +stub_table_options+ with a hash of options.
+Example here[https://github.com/rylwin/check_writer/raw/master/spec/assets/with_stub_table_data-0.12.0.pdf].
 
 Instead of just returning a PDF, you can access the Prawn PDF writer object 
 (Prawn::Document), which you can use to further customize the check or even 

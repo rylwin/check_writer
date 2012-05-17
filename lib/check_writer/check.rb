@@ -11,12 +11,14 @@ module CheckWriter
       :bank_name, :bank_address, :bank_fraction,
       :routing_number, :account_number, 
       :amount, :memo,
-      :with_stubs
+      :with_stubs, :stub_table_data, :stub_table_options
 
     def initialize(attributes={})
       attributes.reverse_merge!(
         :date => Date.today,
-        :with_stubs => false
+        :with_stubs => false,
+        :stub_table_data => [],
+        :stub_table_options => {}
       )
 
       _assign_attributes(attributes)
@@ -178,7 +180,38 @@ module CheckWriter
       top = top_stub ? @pdf.bounds.top - extra_top_margin_height : @pdf.bounds.top - extra_top_margin_height - box_height - between_box_height
       @pdf.bounding_box [@pdf.bounds.left, top], :width => @pdf.bounds.right - @pdf.bounds.left, :height => box_height do
         @pdf.stroke_bounds
+
+        stub_table
         box_bottom_row
+      end
+    end
+
+    def stub_table
+      unless stub_table_data.empty?
+        width = @pdf.bounds.right - @pdf.bounds.left
+
+        # Pass different default options to #table depending on version of 
+        # prawn being used
+        if Gem.loaded_specs["prawn"].version <= Gem::Version.new('0.6.3')
+          headers = stub_table_data.shift
+
+          opts = stub_table_options.reverse_merge(
+            :headers => headers, 
+            :border_style => :underline_header,
+            :width => width
+          )
+
+          @pdf.table(stub_table_data, opts)
+
+          stub_table_data.insert(0, headers)
+        else
+          opts = stub_table_options.reverse_merge(
+            :header => true, 
+            :width => width
+          )
+
+          @pdf.table(stub_table_data, opts)
+        end
       end
     end
 

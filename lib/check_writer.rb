@@ -1,4 +1,5 @@
 require 'prawn'
+require 'prawn/layout' # only needed for versions <= 0.6.3
 require 'active_support/all'
 
 require 'linguistics'

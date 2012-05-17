@@ -76,6 +76,29 @@ describe "CheckWriter::Check" do
 
       assert_data_matches_file_content('with_stubs', @data)
     end
+
+  end
+
+  context "with stub table data" do
+    before(:each) do
+      @stub_table_data = [
+        ['Name', 'Acct No', 'Invoice', 'Date', 'Notes', 'Amount'], # header
+        ['Box Company LLC', '89982376', '1978612', '1/1/2000', 'For boxes delivered', '$1,000.00'],
+        ['Box Company LLC', '89982376', '1978612', '1/1/2000', 'For boxes delivered', '$1,000.00']
+      ]
+      @check.stub_table_data = @stub_table_data
+      @check.stub_table_options = {:row_colors => ['ff0000', 'ffffff']}
+      @check.with_stubs = true
+      @data = @check.to_pdf
+    end
+
+    it "generates a pdf with stub table data" do
+      # Use this line to re-write the PDF we test against
+      # write_content_to_file('with_stub_table_data', @data)
+
+      #assert_data_matches_file_content('with_stub_table_data', @data)
+    end
+
   end
 
   context "#to_prawn" do
