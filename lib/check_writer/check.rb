@@ -116,7 +116,7 @@ module CheckWriter
         @pdf.font_size(10) do
           @pdf.text   bank_name
           pdf_address bank_address
-          @pdf.text   bank_fraction
+          @pdf.text   bank_fraction if bank_fraction.present?
         end
       end
     end
