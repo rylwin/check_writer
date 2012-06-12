@@ -39,7 +39,7 @@ module CheckWriter
 
     # Formats date
     def formatted_date
-      date.strftime('%B %e, %Y')
+      date.strftime('%d/%m/%Y')
     end
 
   end
