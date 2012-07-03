@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = "check_writer"
-  s.version = "0.3.0"
+  s.version = "0.3.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Ryan Winograd"]
@@ -36,12 +36,16 @@ Gem::Specification.new do |s|
     "lib/check_writer.rb",
     "lib/check_writer/attribute_formatting.rb",
     "lib/check_writer/check.rb",
+    "spec/assets/sample-signature.png",
     "spec/assets/test-0.12.0.pdf",
     "spec/assets/test-0.6.1.pdf",
     "spec/assets/test-0.6.3.pdf",
     "spec/assets/two_in_one-0.12.0.pdf",
     "spec/assets/two_in_one-0.6.1.pdf",
     "spec/assets/two_in_one-0.6.3.pdf",
+    "spec/assets/with_signature_image-0.12.0.pdf",
+    "spec/assets/with_signature_image-0.6.1.pdf",
+    "spec/assets/with_signature_image-0.6.3.pdf",
     "spec/assets/with_stub_table_data-0.12.0.pdf",
     "spec/assets/with_stub_table_data-0.6.1.pdf",
     "spec/assets/with_stub_table_data-0.6.3.pdf",
