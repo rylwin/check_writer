@@ -76,7 +76,6 @@ describe "CheckWriter::Check" do
 
       assert_data_matches_file_content('with_stubs', @data)
     end
-
   end
 
   context "with stub table data" do
@@ -98,7 +97,20 @@ describe "CheckWriter::Check" do
 
       #assert_data_matches_file_content('with_stub_table_data', @data)
     end
+  end
 
+  context "with signature image" do
+    before(:each) do
+      @check.signature_image_file = TEST_ASSETS + "/sample-signature.png"
+      @data = @check.to_pdf
+    end
+
+    it "generates a pdf with the signature image on the signature line" do
+      # Use this line to re-write the PDF we test against
+      # write_content_to_file('with_signature_image', @data)
+
+      assert_data_matches_file_content('with_signature_image', @data)
+    end
   end
 
   context "#to_prawn" do
