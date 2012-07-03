@@ -11,7 +11,8 @@ module CheckWriter
       :bank_name, :bank_address, :bank_fraction,
       :routing_number, :account_number, 
       :amount, :memo,
-      :with_stubs, :stub_table_data, :stub_table_options
+      :with_stubs, :stub_table_data, :stub_table_options,
+      :signature_image_file
 
     def initialize(attributes={})
       attributes.reverse_merge!(
@@ -162,7 +163,12 @@ module CheckWriter
     end
 
     def signature
-      @pdf.bounding_box [@pdf.bounds.right - inches(2.5), @pdf.bounds.bottom + inches(0.7)], :width => inches(2.5) do
+      box_at = [@pdf.bounds.right - inches(2.5), @pdf.bounds.bottom + inches(0.7)]
+      sig_at = [@pdf.bounds.right - inches(2.5), @pdf.bounds.bottom + inches(0.7) + 40]
+
+      @pdf.image @signature_image_file, :at => sig_at if @signature_image_file
+
+      @pdf.bounding_box box_at, :width => inches(2.5) do
         @pdf.horizontal_rule
         @pdf.move_down 2
         # TODO: better currency formatting
