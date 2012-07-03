@@ -66,6 +66,11 @@ include multiple checks on the same PDF:
   pdf = check2.to_prawn(pdf)
   pdf.render # returns the PDF data for a PDF w/ two checks on two pages
 
+== Signatures
+
+Signatures can be included on the checks by setting the +:signature_image_file+ option, which should
+reference a JPG or PNG image. The recommended dimensions for a signature image are 175px x 40px.
+
 == Tests
 
 check_writer uses the appraisal gem to facilitate testing of various versions of prawn. To run the tests using appraisal:
