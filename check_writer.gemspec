@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "check_writer"
-  s.version = "0.2.1"
+  s.version = "0.3.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Ryan Winograd"]
-  s.date = "2012-06-12"
+  s.date = "2012-07-03"
   s.description = "Ruby library for generating PDF checks that you can take to the bank"
   s.email = "ryan@thewinograds.com"
   s.extra_rdoc_files = [
