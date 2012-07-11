@@ -6,6 +6,9 @@ It generates PDF checks that look something
 like this[https://github.com/rylwin/check_writer/raw/master/spec/assets/test-0.12.0.pdf].
 Print that PDF on check stock and you've got yourself a real check.
 
+Note: This project is being written/maintained using Ruby 1.9.3.
+Other versions of Ruby have not been tested.
+
 == Project Status
 
 A version of this code has been used in a production application for a couple of years 
