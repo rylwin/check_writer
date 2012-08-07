@@ -7,7 +7,7 @@ module CheckWriter
     #
     # amount = 3.23 => 23
     def cents
-      ((amount.to_f - dollars) * 100).to_i
+      ((amount.to_f - dollars) * 100).round
     end
 
     # Returns an integer representing the number of dollars of the amount
