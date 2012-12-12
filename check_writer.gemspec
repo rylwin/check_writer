@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "check_writer"
-  s.version = "0.4.1"
+  s.version = "0.4.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Ryan Winograd"]
-  s.date = "2012-08-07"
+  s.date = "2012-12-12"
   s.description = "Ruby library for generating PDF checks that you can take to the bank"
   s.email = "ryan@thewinograds.com"
   s.extra_rdoc_files = [
@@ -43,6 +43,9 @@ Gem::Specification.new do |s|
     "spec/assets/two_in_one-0.12.0.pdf",
     "spec/assets/two_in_one-0.6.1.pdf",
     "spec/assets/two_in_one-0.6.3.pdf",
+    "spec/assets/with_second_signature_line-0.12.0.pdf",
+    "spec/assets/with_second_signature_line-0.6.1.pdf",
+    "spec/assets/with_second_signature_line-0.6.3.pdf",
     "spec/assets/with_signature_image-0.12.0.pdf",
     "spec/assets/with_signature_image-0.6.1.pdf",
     "spec/assets/with_signature_image-0.6.3.pdf",
