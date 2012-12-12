@@ -7,11 +7,12 @@ module CheckWriter
 
     attr_accessor :number, :date,
       :payee_name, :payor_name,
-      :payee_address, :payor_address, 
+      :payee_address, :payor_address,
       :bank_name, :bank_address, :bank_fraction,
-      :routing_number, :account_number, 
+      :routing_number, :account_number,
       :amount, :memo,
       :with_stubs, :stub_table_data, :stub_table_options,
+      :second_signature_line,
       :signature_image_file
 
     def initialize(attributes={})
@@ -30,7 +31,7 @@ module CheckWriter
       to_prawn.render
     end
 
-    # Renders the check and returns the Prawn::Document for 
+    # Renders the check and returns the Prawn::Document for
     # further manipulation.
     #
     # To use an existing Prawn::Document, pass this in as the
@@ -58,7 +59,7 @@ module CheckWriter
         check_stub(false) # middle 1/3 stub
       end
 
-      @pdf.bounding_box [@pdf.bounds.left,@pdf.bounds.top - extra_top_margin_height - box_height*2 - between_box_height*2], 
+      @pdf.bounding_box [@pdf.bounds.left,@pdf.bounds.top - extra_top_margin_height - box_height*2 - between_box_height*2],
         :width => @pdf.bounds.right - @pdf.bounds.left, :height => check_box_height do
 
         @pdf.bounding_box [@pdf.bounds.left + inches(5.5), @pdf.bounds.top - inches(0.25)], :width => inches(2) do
@@ -142,7 +143,7 @@ module CheckWriter
         @pdf.text formatted_date
       end
       @pdf.bounding_box [@pdf.bounds.right - inches(1) - 4, @pdf.bounds.top - inches(1.25)], :width => inches(1) do
-        @pdf.text formatted_amount, :align => :right    
+        @pdf.text formatted_amount, :align => :right
       end
       @pdf.text_box "#{amount_in_words}#{" -"*72}", :at => [@pdf.bounds.left + 4, @pdf.bounds.top - inches(1.5)], :height => inches(0.2)
       @pdf.bounding_box [@pdf.bounds.right - inches(3.5), @pdf.bounds.top - inches(1.75)], :width => inches(3.5) do
@@ -167,6 +168,15 @@ module CheckWriter
       sig_at = [@pdf.bounds.right - inches(2.5), @pdf.bounds.bottom + inches(0.7) + 40]
 
       @pdf.image @signature_image_file, :at => sig_at if @signature_image_file
+
+      second_sig_box_at = box_at.dup
+      second_sig_box_at[1] += inches(0.6)
+      @pdf.bounding_box second_sig_box_at, width: inches(2.5) do
+        @pdf.horizontal_rule
+        @pdf.move_down 2
+        # TODO: better currency formatting
+        @pdf.text "TWO SIGNATURES REQUIRED", :size => 8, :align => :center
+      end if second_signature_line
 
       @pdf.bounding_box box_at, :width => inches(2.5) do
         @pdf.horizontal_rule
@@ -196,13 +206,13 @@ module CheckWriter
       unless stub_table_data.empty?
         width = @pdf.bounds.right - @pdf.bounds.left
 
-        # Pass different default options to #table depending on version of 
+        # Pass different default options to #table depending on version of
         # prawn being used
         if Gem.loaded_specs["prawn"].version <= Gem::Version.new('0.6.3')
           headers = stub_table_data.shift
 
           opts = stub_table_options.reverse_merge(
-            :headers => headers, 
+            :headers => headers,
             :border_style => :underline_header,
             :width => width
           )
@@ -212,7 +222,7 @@ module CheckWriter
           stub_table_data.insert(0, headers)
         else
           opts = stub_table_options.reverse_merge(
-            :header => true, 
+            :header => true,
             :width => width
           )
 
@@ -226,22 +236,22 @@ module CheckWriter
         @pdf.font MICR_FONT do
           @pdf.text "C#{number}C A#{routing_number}A #{account_number}C"
         end
-      end 
+      end
     end
 
     def box_height
       180 # 2.5in
     end
 
-    def between_box_height 
+    def between_box_height
       54 # 3/4in
     end
 
-    def extra_top_margin_height 
+    def extra_top_margin_height
       36 # 1/2in
     end
 
-    def check_box_height 
+    def check_box_height
       252 #3.5in
     end
   end

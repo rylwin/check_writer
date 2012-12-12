@@ -57,7 +57,7 @@ describe "CheckWriter::Check" do
 
   it "generates pdf correctly" do
     data = @check.to_pdf
-    
+
     # Use this line to re-write the PDF we test against
     # write_content_to_file('test', data)
 
@@ -96,6 +96,19 @@ describe "CheckWriter::Check" do
       # write_content_to_file('with_stub_table_data', @data)
 
       #assert_data_matches_file_content('with_stub_table_data', @data)
+    end
+  end
+
+  context "with second signature line" do
+    before(:each) do
+      @check.second_signature_line = true
+      @data = @check.to_pdf
+    end
+    it "generates a pdf with a second signature line" do
+      # Use this line to re-write the PDF we test against
+      write_content_to_file('with_second_signature_line', @data)
+
+      assert_data_matches_file_content('with_second_signature_line', @data)
     end
   end
 
