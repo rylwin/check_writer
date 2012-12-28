@@ -167,7 +167,7 @@ module CheckWriter
       box_at = [@pdf.bounds.right - inches(2.5), @pdf.bounds.bottom + inches(0.7)]
       sig_at = [@pdf.bounds.right - inches(2.5), @pdf.bounds.bottom + inches(0.7) + 40]
 
-      @pdf.image @signature_image_file, :at => sig_at if @signature_image_file
+      @pdf.image @signature_image_file, :scale => 0.25, :at => sig_at if @signature_image_file
 
       second_sig_box_at = box_at.dup
       second_sig_box_at[1] += inches(0.6)
