@@ -64,6 +64,20 @@ describe "CheckWriter::Check" do
     assert_data_matches_file_content('test', data)
   end
 
+  context "void" do
+    before(:each) do
+      @check.void = true
+      @data = @check.to_pdf
+    end
+
+    it "generates a pdf with VOID on the check stub" do
+      # Use this line to re-write the PDF we test against
+      # write_content_to_file('void', @data)
+
+      assert_data_matches_file_content('void', @data)
+    end
+  end
+
   context "with stubs" do
     before(:each) do
       @check.with_stubs = true
@@ -106,7 +120,7 @@ describe "CheckWriter::Check" do
     end
     it "generates a pdf with a second signature line" do
       # Use this line to re-write the PDF we test against
-      write_content_to_file('with_second_signature_line', @data)
+      # write_content_to_file('with_second_signature_line', @data)
 
       assert_data_matches_file_content('with_second_signature_line', @data)
     end

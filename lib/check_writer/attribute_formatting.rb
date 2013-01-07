@@ -21,6 +21,7 @@ module CheckWriter
     #
     # amount = 1000 => $1,000.00
     def formatted_amount
+      return "VOID" if void
       separated_dollars = dollars.to_s.gsub(/(\d)(?=(\d\d\d)+(?!\d))/, "\\1,")
       cents_string = (cents < 10) ? "0#{cents}" : cents
       "$#{separated_dollars}.#{cents_string}"
@@ -30,7 +31,8 @@ module CheckWriter
     #
     # amount = 1.12 => One Dollar and Twelve Cents
     def amount_in_words
-      # Wrap cents in string before calling numwords to avoid 
+      return "VOID" if void
+      # Wrap cents in string before calling numwords to avoid
       # SafeBuffer cannot modify string in place error
       cents = "#{self.cents}".en.numwords
 

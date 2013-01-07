@@ -10,7 +10,7 @@ module CheckWriter
       :payee_address, :payor_address,
       :bank_name, :bank_address, :bank_fraction,
       :routing_number, :account_number,
-      :amount, :memo,
+      :amount, :memo, :void,
       :with_stubs, :stub_table_data, :stub_table_options,
       :second_signature_line,
       :signature_image_file
@@ -18,6 +18,7 @@ module CheckWriter
     def initialize(attributes={})
       attributes.reverse_merge!(
         :date => Date.today,
+        :void => false,
         :with_stubs => false,
         :stub_table_data => [],
         :stub_table_options => {}
@@ -72,6 +73,19 @@ module CheckWriter
         _payee_address
         signature
         micr
+
+        if void
+          if Gem::Version.new(Prawn::VERSION) >= Gem::Version.new("0.12.0")
+            @pdf.draw_text "VOID",
+              :at => [@pdf.bounds.left + 400, @pdf.bounds.top - 200],
+              :size => 40
+          else
+            @pdf.text "VOID",
+              :at => [@pdf.bounds.left + 400, @pdf.bounds.top - 200],
+              :size => 40
+          end
+        end
+
         end
 
       # calling stroke here seems to flush the writer. When we don't call stroke, some lines aren't output
