@@ -12,6 +12,7 @@ module CheckWriter
       :routing_number, :account_number,
       :amount, :memo, :void,
       :with_stubs, :stub_table_data, :stub_table_options,
+      :stub_table_lambda,
       :second_signature_line,
       :signature_image_file
 
@@ -21,7 +22,8 @@ module CheckWriter
         :void => false,
         :with_stubs => false,
         :stub_table_data => [],
-        :stub_table_options => {}
+        :stub_table_options => {},
+        :stub_table_lambda => nil
       )
 
       _assign_attributes(attributes)
@@ -220,26 +222,14 @@ module CheckWriter
       unless stub_table_data.empty?
         width = @pdf.bounds.right - @pdf.bounds.left
 
-        # Pass different default options to #table depending on version of
-        # prawn being used
-        if Gem.loaded_specs["prawn"].version <= Gem::Version.new('0.6.3')
-          headers = stub_table_data.shift
+        opts = stub_table_options.reverse_merge(
+          :header => true,
+          :width => width
+        )
 
-          opts = stub_table_options.reverse_merge(
-            :headers => headers,
-            :border_style => :underline_header,
-            :width => width
-          )
-
-          @pdf.table(stub_table_data, opts)
-
-          stub_table_data.insert(0, headers)
+        if stub_table_lambda
+          @pdf.table(stub_table_data, opts, &stub_table_lambda)
         else
-          opts = stub_table_options.reverse_merge(
-            :header => true,
-            :width => width
-          )
-
           @pdf.table(stub_table_data, opts)
         end
       end

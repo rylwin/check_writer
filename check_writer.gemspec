@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Ryan Winograd"]
-  s.date = "2012-12-12"
+  s.date = "2013-01-09"
   s.description = "Ruby library for generating PDF checks that you can take to the bank"
   s.email = "ryan@thewinograds.com"
   s.extra_rdoc_files = [
@@ -19,7 +19,6 @@ Gem::Specification.new do |s|
   s.files = [
     ".document",
     ".rspec",
-    "Appraisals",
     "Gemfile",
     "Gemfile.lock",
     "LICENSE.txt",
@@ -27,34 +26,17 @@ Gem::Specification.new do |s|
     "Rakefile",
     "VERSION",
     "check_writer.gemspec",
-    "gemfiles/prawn0.12.0.gemfile",
-    "gemfiles/prawn0.12.0.gemfile.lock",
-    "gemfiles/prawn0.6.1.gemfile",
-    "gemfiles/prawn0.6.1.gemfile.lock",
-    "gemfiles/prawn0.6.3.gemfile",
-    "gemfiles/prawn0.6.3.gemfile.lock",
     "lib/check_writer.rb",
     "lib/check_writer/attribute_formatting.rb",
     "lib/check_writer/check.rb",
     "spec/assets/sample-signature.png",
     "spec/assets/test-0.12.0.pdf",
-    "spec/assets/test-0.6.1.pdf",
-    "spec/assets/test-0.6.3.pdf",
     "spec/assets/two_in_one-0.12.0.pdf",
-    "spec/assets/two_in_one-0.6.1.pdf",
-    "spec/assets/two_in_one-0.6.3.pdf",
+    "spec/assets/void-0.12.0.pdf",
     "spec/assets/with_second_signature_line-0.12.0.pdf",
-    "spec/assets/with_second_signature_line-0.6.1.pdf",
-    "spec/assets/with_second_signature_line-0.6.3.pdf",
     "spec/assets/with_signature_image-0.12.0.pdf",
-    "spec/assets/with_signature_image-0.6.1.pdf",
-    "spec/assets/with_signature_image-0.6.3.pdf",
     "spec/assets/with_stub_table_data-0.12.0.pdf",
-    "spec/assets/with_stub_table_data-0.6.1.pdf",
-    "spec/assets/with_stub_table_data-0.6.3.pdf",
     "spec/assets/with_stubs-0.12.0.pdf",
-    "spec/assets/with_stubs-0.6.1.pdf",
-    "spec/assets/with_stubs-0.6.3.pdf",
     "spec/check_spec.rb",
     "spec/spec_helper.rb",
     "vendor/GnuMICR-0.30/AUTHORS",
@@ -86,38 +68,32 @@ Gem::Specification.new do |s|
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<activesupport>, [">= 0"])
-      s.add_runtime_dependency(%q<prawn>, [">= 0"])
+      s.add_runtime_dependency(%q<prawn>, [">= 0.12.0"])
       s.add_runtime_dependency(%q<linguistics>, [">= 0"])
-      s.add_development_dependency(%q<appraisal>, [">= 0"])
       s.add_development_dependency(%q<rake>, [">= 0"])
       s.add_development_dependency(%q<jeweler>, ["~> 1.8.3"])
-      s.add_development_dependency(%q<appraisal>, [">= 0"])
       s.add_development_dependency(%q<rspec>, ["~> 2.8.0"])
       s.add_development_dependency(%q<rdoc>, ["~> 3.12"])
-      s.add_development_dependency(%q<bundler>, ["~> 1.1.0"])
+      s.add_development_dependency(%q<bundler>, [">= 1.1.0"])
     else
       s.add_dependency(%q<activesupport>, [">= 0"])
-      s.add_dependency(%q<prawn>, [">= 0"])
+      s.add_dependency(%q<prawn>, [">= 0.12.0"])
       s.add_dependency(%q<linguistics>, [">= 0"])
-      s.add_dependency(%q<appraisal>, [">= 0"])
       s.add_dependency(%q<rake>, [">= 0"])
       s.add_dependency(%q<jeweler>, ["~> 1.8.3"])
-      s.add_dependency(%q<appraisal>, [">= 0"])
       s.add_dependency(%q<rspec>, ["~> 2.8.0"])
       s.add_dependency(%q<rdoc>, ["~> 3.12"])
-      s.add_dependency(%q<bundler>, ["~> 1.1.0"])
+      s.add_dependency(%q<bundler>, [">= 1.1.0"])
     end
   else
     s.add_dependency(%q<activesupport>, [">= 0"])
-    s.add_dependency(%q<prawn>, [">= 0"])
+    s.add_dependency(%q<prawn>, [">= 0.12.0"])
     s.add_dependency(%q<linguistics>, [">= 0"])
-    s.add_dependency(%q<appraisal>, [">= 0"])
     s.add_dependency(%q<rake>, [">= 0"])
     s.add_dependency(%q<jeweler>, ["~> 1.8.3"])
-    s.add_dependency(%q<appraisal>, [">= 0"])
     s.add_dependency(%q<rspec>, ["~> 2.8.0"])
     s.add_dependency(%q<rdoc>, ["~> 3.12"])
-    s.add_dependency(%q<bundler>, ["~> 1.1.0"])
+    s.add_dependency(%q<bundler>, [">= 1.1.0"])
   end
 end
 

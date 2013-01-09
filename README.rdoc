@@ -57,7 +57,7 @@ Here's an example[https://github.com/rylwin/check_writer/raw/master/spec/assets/
 
 It is also possible to include additional data in the stubs in the form of a table. If +with_stubs+ is true,
 then passing a 2D array to +stub_table_data+ will generate a table within each stub. To pass options to Prawn's
-#table method, set +stub_table_options+ with a hash of options.
+#table method, set +stub_table_options+ with a hash of options. You can also use +stub_table_lambda+ to provide a block that is sent to the #table method.
 Example here[https://github.com/rylwin/check_writer/raw/master/spec/assets/with_stub_table_data-0.12.0.pdf].
 
 Instead of just returning a PDF, you can access the Prawn PDF writer object
@@ -75,18 +75,6 @@ Signatures can be included on the checks by setting the +:signature_image_file+ 
 reference a JPG or PNG image. The recommended dimensions for a signature image are 175px x 40px.
 
 If you need a second signature line on the check, +:second_signature_line+ to true.
-
-== Tests
-
-check_writer uses the appraisal gem to facilitate testing of various versions of prawn. To run the tests using appraisal:
-
-    $ rake appraisal
-
-Note that if you need modify the Gemfile and need to re-bundle, you will also have to reinstall the appraisal gemfiles as well. To do this, your must first remove the +:development+ group from the Gemfile (i.e., the gems in the development group need to be bundled along with the rest of the gems, so they cannot be isolated in the dev group). Once you have done this, run:
-
-    $ rake appraisal:install
-
-After appraisal installs its gemfiles, you can revert your Gemfile to as it was before.
 
 == Contributing to check_writer
 

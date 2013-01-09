@@ -8,7 +8,7 @@ require 'check_writer'
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}
 
 RSpec.configure do |config|
-  
+
 end
 
 TEST_ASSETS = File.expand_path("assets", File.dirname(__FILE__)).to_s

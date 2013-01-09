@@ -10,7 +10,6 @@ rescue Bundler::BundlerError => e
   exit e.status_code
 end
 require 'rake'
-require 'appraisal'
 
 require 'jeweler'
 Jeweler::Tasks.new do |gem|

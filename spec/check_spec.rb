@@ -101,15 +101,18 @@ describe "CheckWriter::Check" do
       ]
       @check.stub_table_data = @stub_table_data
       @check.stub_table_options = {:row_colors => ['ff0000', 'ffffff']}
+      @check.stub_table_lambda = lambda { |t|
+        t.cells.column(5).align = :right
+      }
       @check.with_stubs = true
       @data = @check.to_pdf
     end
 
     it "generates a pdf with stub table data" do
       # Use this line to re-write the PDF we test against
-      # write_content_to_file('with_stub_table_data', @data)
+      write_content_to_file('with_stub_table_data', @data)
 
-      #assert_data_matches_file_content('with_stub_table_data', @data)
+      assert_data_matches_file_content('with_stub_table_data', @data)
     end
   end
 
@@ -120,7 +123,7 @@ describe "CheckWriter::Check" do
     end
     it "generates a pdf with a second signature line" do
       # Use this line to re-write the PDF we test against
-      # write_content_to_file('with_second_signature_line', @data)
+       write_content_to_file('with_second_signature_line', @data)
 
       assert_data_matches_file_content('with_second_signature_line', @data)
     end
@@ -134,7 +137,7 @@ describe "CheckWriter::Check" do
 
     it "generates a pdf with the signature image on the signature line" do
       # Use this line to re-write the PDF we test against
-      # write_content_to_file('with_signature_image', @data)
+       write_content_to_file('with_signature_image', @data)
 
       assert_data_matches_file_content('with_signature_image', @data)
     end
@@ -152,7 +155,7 @@ describe "CheckWriter::Check" do
       @data = pdf.render
 
       # Use this line to re-write the PDF we test against
-      # write_content_to_file('two_in_one', @data)
+       write_content_to_file('two_in_one', @data)
 
       assert_data_matches_file_content('two_in_one', @data)
     end
