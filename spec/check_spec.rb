@@ -90,6 +90,20 @@ describe "CheckWriter::Check" do
 
       assert_data_matches_file_content('with_stubs', @data)
     end
+
+    context "blank" do
+      before(:each) do
+        @check.blank = true
+        @data = @check.to_pdf
+      end
+
+      it "generates a pdf with VOID on the check stub" do
+        # Use this line to re-write the PDF we test against
+        # write_content_to_file('blank', @data)
+
+        assert_data_matches_file_content('blank', @data)
+      end
+    end
   end
 
   context "with stub table data" do
@@ -110,7 +124,7 @@ describe "CheckWriter::Check" do
 
     it "generates a pdf with stub table data" do
       # Use this line to re-write the PDF we test against
-      write_content_to_file('with_stub_table_data', @data)
+      # write_content_to_file('with_stub_table_data', @data)
 
       assert_data_matches_file_content('with_stub_table_data', @data)
     end
@@ -123,7 +137,7 @@ describe "CheckWriter::Check" do
     end
     it "generates a pdf with a second signature line" do
       # Use this line to re-write the PDF we test against
-       write_content_to_file('with_second_signature_line', @data)
+      # write_content_to_file('with_second_signature_line', @data)
 
       assert_data_matches_file_content('with_second_signature_line', @data)
     end
@@ -137,7 +151,7 @@ describe "CheckWriter::Check" do
 
     it "generates a pdf with the signature image on the signature line" do
       # Use this line to re-write the PDF we test against
-       write_content_to_file('with_signature_image', @data)
+      # write_content_to_file('with_signature_image', @data)
 
       assert_data_matches_file_content('with_signature_image', @data)
     end
@@ -155,7 +169,7 @@ describe "CheckWriter::Check" do
       @data = pdf.render
 
       # Use this line to re-write the PDF we test against
-       write_content_to_file('two_in_one', @data)
+      # write_content_to_file('two_in_one', @data)
 
       assert_data_matches_file_content('two_in_one', @data)
     end

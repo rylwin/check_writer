@@ -76,6 +76,15 @@ reference a JPG or PNG image. The recommended dimensions for a signature image a
 
 If you need a second signature line on the check, +:second_signature_line+ to true.
 
+== Void and Blank Checks
+
+There are times where you may want to print a check that is clearly marked as a
+void check. Setting +void+ to a truish value will place "void" in place of the
+amount, check number, and the signature line.
+
+If you want the PDF to include everything except the lower one-third of the
+page (the actual check part), set +blank+ to a truish value.
+
 == Contributing to check_writer
 
 * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet.
