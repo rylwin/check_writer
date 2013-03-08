@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "check_writer"
-  s.version = "0.4.3"
+  s.version = "0.4.4"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Ryan Winograd"]
-  s.date = "2013-01-09"
+  s.date = "2013-03-08"
   s.description = "Ruby library for generating PDF checks that you can take to the bank"
   s.email = "ryan@thewinograds.com"
   s.extra_rdoc_files = [
@@ -29,6 +29,7 @@ Gem::Specification.new do |s|
     "lib/check_writer.rb",
     "lib/check_writer/attribute_formatting.rb",
     "lib/check_writer/check.rb",
+    "spec/assets/blank-0.12.0.pdf",
     "spec/assets/sample-signature.png",
     "spec/assets/test-0.12.0.pdf",
     "spec/assets/two_in_one-0.12.0.pdf",
@@ -37,6 +38,7 @@ Gem::Specification.new do |s|
     "spec/assets/with_signature_image-0.12.0.pdf",
     "spec/assets/with_stub_table_data-0.12.0.pdf",
     "spec/assets/with_stubs-0.12.0.pdf",
+    "spec/assets/with_two_thirds_stub-0.12.0.pdf",
     "spec/check_spec.rb",
     "spec/spec_helper.rb",
     "vendor/GnuMICR-0.30/AUTHORS",
