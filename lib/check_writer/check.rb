@@ -5,6 +5,8 @@ module CheckWriter
 
     include CheckWriter::AttributeFormatting
 
+    STUB_FORMATS = [:one_third, :two_thirds]
+
     attr_accessor :number, :date,
       :payee_name, :payor_name,
       :payee_address, :payor_address,
@@ -14,7 +16,8 @@ module CheckWriter
       :with_stubs, :stub_table_data, :stub_table_options,
       :stub_table_lambda,
       :second_signature_line,
-      :signature_image_file
+      :signature_image_file,
+      :stub_format
 
     def initialize(attributes={})
       attributes.reverse_merge!(
@@ -24,7 +27,8 @@ module CheckWriter
         :with_stubs => false,
         :stub_table_data => [],
         :stub_table_options => {},
-        :stub_table_lambda => nil
+        :stub_table_lambda => nil,
+        :stub_format => :one_third
       )
 
       _assign_attributes(attributes)
@@ -47,6 +51,14 @@ module CheckWriter
       @pdf
     end
 
+    def stub_format=(val)
+      if !STUB_FORMATS.include?(val.to_sym)
+        raise "Invalid stub_format '#{val}'. Must be one of #{STUB_FORMATS}."
+      end
+
+      @stub_format = val
+    end
+
     private
 
     def _assign_attributes(attr)
@@ -60,7 +72,7 @@ module CheckWriter
 
       if with_stubs
         check_stub(true) # top 1/3 stub
-        check_stub(false) # middle 1/3 stub
+        check_stub(false) if stub_format == :one_third # middle 1/3 stub
       end
 
       @pdf.bounding_box [@pdf.bounds.left,@pdf.bounds.top - extra_top_margin_height - box_height*2 - between_box_height*2],
@@ -211,7 +223,7 @@ module CheckWriter
     def check_stub(top_stub=true)
       check_number(!top_stub)
       top = top_stub ? @pdf.bounds.top - extra_top_margin_height : @pdf.bounds.top - extra_top_margin_height - box_height - between_box_height
-      @pdf.bounding_box [@pdf.bounds.left, top], :width => @pdf.bounds.right - @pdf.bounds.left, :height => box_height do
+      @pdf.bounding_box [@pdf.bounds.left, top], :width => @pdf.bounds.right - @pdf.bounds.left, :height => stub_height do
         @pdf.stroke_bounds
 
         stub_table
@@ -246,6 +258,15 @@ module CheckWriter
 
     def box_height
       180 # 2.5in
+    end
+
+    def stub_height
+      case stub_format
+      when :one_third
+        box_height
+      when :two_thirds
+        box_height * 2.5
+      end
     end
 
     def between_box_height

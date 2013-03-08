@@ -106,6 +106,26 @@ describe "CheckWriter::Check" do
     end
   end
 
+  it "raises exception when stub_format invalid" do
+    expect { @check.stub_format = :wrong }.to raise_error
+    expect { @check.stub_format = :two_thirds }.to_not raise_error
+  end
+
+  context "with two-thirds stub" do
+    before(:each) do
+      @check.stub_format = :two_thirds
+      @check.with_stubs = true
+      @data = @check.to_pdf
+    end
+
+    it "generates a pdf with check stubs stroked and some basic info" do
+      # Use this line to re-write the PDF we test against
+      # write_content_to_file('with_two_thirds_stub', @data)
+
+      assert_data_matches_file_content('with_two_thirds_stub', @data)
+    end
+  end
+
   context "with stub table data" do
     before(:each) do
       @stub_table_data = [
