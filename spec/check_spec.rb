@@ -26,7 +26,7 @@ describe "CheckWriter::Check" do
       :bank_name => 'Bank of America',
       :bank_address => bank_address,
       :bank_fraction => '12-9876/1234',
-      :routing_number => '1234567689',
+      :routing_number => '123456768',
       :account_number => '123456789',
       :amount => '1003.23',
       :memo => 'Memo: Void after 60 days'

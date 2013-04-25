@@ -249,7 +249,12 @@ module CheckWriter
     end
 
     def micr
-      @pdf.bounding_box [@pdf.bounds.left + inches(0.9), @pdf.bounds.bottom + 22], :width => inches(4.5) do
+      height = @pdf.bounds.bottom + 22
+
+      leading_spaces = (12 - number.to_s.length)
+      x = @pdf.bounds.left + inches(0.32) + (leading_spaces * 9)
+
+      @pdf.bounding_box [x, height], :width => inches(5.5) do
         @pdf.font MICR_FONT do
           @pdf.text "C#{number}C A#{routing_number}A #{account_number}C"
         end
