@@ -172,7 +172,7 @@ module CheckWriter
         @pdf.text formatted_date
       end
       @pdf.bounding_box [@pdf.bounds.right - inches(1) - 4, @pdf.bounds.top - inches(1.25)], :width => inches(1) do
-        @pdf.text formatted_amount, :align => :right
+        @pdf.text "<b>#{formatted_amount}</b>", :align => :right, :inline_format => true
       end
       @pdf.text_box "#{amount_in_words}#{" -"*72}", :at => [@pdf.bounds.left + 4, @pdf.bounds.top - inches(1.5)], :height => inches(0.2)
       @pdf.bounding_box [@pdf.bounds.right - inches(3.5), @pdf.bounds.top - inches(1.75)], :width => inches(3.5) do
