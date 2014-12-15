@@ -19,7 +19,7 @@ describe "CheckWriter::Check" do
     @check = CheckWriter::Check.new(
       :date => Date.parse('5/7/2012'),
       :number => '12345',
-      :payee_name => 'John Smith',
+      :payee_name => 'John Smith with a Really Really, Really Really Long Name',
       :payee_address => payee_address,
       :payor_name => 'Payor Company Name',
       :payor_address => payor_address,

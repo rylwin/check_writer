@@ -185,7 +185,7 @@ module CheckWriter
     def _payee_address
       @pdf.bounding_box [@pdf.bounds.left + 4, @pdf.bounds.top - inches(1.75)], :width => inches(3.5) do
         @pdf.text "TO THE ORDER OF:", :size => 8
-        @pdf.bounding_box [@pdf.bounds.left + inches(0.25), @pdf.bounds.top - inches(0.3)], :width => inches(3.25) do
+        @pdf.bounding_box [@pdf.bounds.left + inches(0.25), @pdf.bounds.top - inches(0.3)], :width => inches(4.5) do
           @pdf.text payee_name
           pdf_address(payee_address)
         end
