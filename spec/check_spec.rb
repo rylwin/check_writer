@@ -28,18 +28,18 @@ describe "CheckWriter::Check" do
       :bank_fraction => '12-9876/1234',
       :routing_number => '123456768',
       :account_number => '123456789',
-      :amount => '1003.23',
+      :amount => '1000003.23',
       :memo => 'Memo: Void after 60 days'
     )
   end
 
   it "knows how many dollars and cents" do
-    @check.dollars.should == 1003
+    @check.dollars.should == 1_000_003
     @check.cents.should == 23
   end
 
   it "can format the amount as currency" do
-    @check.formatted_amount.should == "$1,003.23"
+    @check.formatted_amount.should == "$1,000,003.23"
   end
 
   context "a check for an amount with 0 cents" do

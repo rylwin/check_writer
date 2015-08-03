@@ -120,15 +120,15 @@ module CheckWriter
       # Payor and payee names
       @pdf.move_to [@pdf.bounds.left, inches(0.5)]
       @pdf.line_to [@pdf.bounds.right, inches(0.5)]
-      @pdf.bounding_box [@pdf.bounds.left + 8, inches(0.5) - 6], :width => inches(6.75) do
+      @pdf.bounding_box [@pdf.bounds.left + 8, inches(0.5) - 6], :width => inches(6.5) do
         @pdf.text "Payor: #{payor_name}"
         @pdf.text "Payee: #{payee_name}"
       end
 
       # Amount
-      @pdf.move_to [@pdf.bounds.right - inches(2), inches(0.5)]
-      @pdf.line_to [@pdf.bounds.right - inches(2), 0]
-      @pdf.bounding_box [@pdf.bounds.left + inches(5.5), inches(0.5) - 6], :width => inches(1), :height => inches(0.5) do
+      @pdf.move_to [@pdf.bounds.right - inches(2.25), inches(0.5)]
+      @pdf.line_to [@pdf.bounds.right - inches(2.25), 0]
+      @pdf.bounding_box [@pdf.bounds.left + inches(5.25), inches(0.5) - 6], :width => inches(1.25), :height => inches(0.5) do
         @pdf.text "Amount", :align => :center
         @pdf.text formatted_amount, :align => :center
       end
@@ -171,7 +171,7 @@ module CheckWriter
       @pdf.bounding_box [@pdf.bounds.left + inches(4.5), @pdf.bounds.top - inches(1.25)], :width => inches(1) do
         @pdf.text formatted_date
       end
-      @pdf.bounding_box [@pdf.bounds.right - inches(1) - 4, @pdf.bounds.top - inches(1.25)], :width => inches(1) do
+      @pdf.bounding_box [@pdf.bounds.right - inches(2) - 4, @pdf.bounds.top - inches(1.25)], :width => inches(2) do
         @pdf.text "<b>#{formatted_amount}</b>", :align => :right, :inline_format => true
       end
       @pdf.text_box "#{amount_in_words}#{" -"*72}", :at => [@pdf.bounds.left + 4, @pdf.bounds.top - inches(1.5)], :height => inches(0.2)
