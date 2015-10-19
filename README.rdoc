@@ -1,5 +1,7 @@
 = check_writer
 
+{<img src='https://semaphoreci.com/api/v1/projects/b3c72c98-d73f-47f4-9fce-6ef029975969/573898/badge.svg' alt='Build Status'>}[https://semaphoreci.com/rylwin/check_writer]
+
 A ruby gem to help generate checks in PDF format.
 
 It generates PDF checks that look something
