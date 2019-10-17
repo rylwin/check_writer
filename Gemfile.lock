@@ -15,7 +15,7 @@ GEM
       git (>= 1.2.5)
       rake
       rdoc
-    json (1.8.3)
+    json (1.8.6)
     linguistics (2.1.0)
       loggability (~> 0.11)
     loggability (0.11.0)
@@ -30,7 +30,7 @@ GEM
       pdf-reader (>= 0.9.0)
       ttfunk (~> 1.0.2)
     rake (10.0.3)
-    rdoc (3.12)
+    rdoc (3.12.1)
       json (~> 1.4)
     rspec (2.8.0)
       rspec-core (~> 2.8.0)
