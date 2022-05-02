@@ -13,6 +13,6 @@ group :development do
   gem 'rake'
   gem "jeweler", "~> 1.8.3"
   gem "rspec", "~> 2.8.0"
-  gem "rdoc", "~> 3.12"
+  gem "rdoc", "~> 6.3"
   gem "bundler", ">= 1.1.0"
 end
