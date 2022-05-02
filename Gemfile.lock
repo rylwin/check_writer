@@ -30,7 +30,7 @@ GEM
     prawn (0.12.0)
       pdf-reader (>= 0.9.0)
       ttfunk (~> 1.0.2)
-    rake (10.0.3)
+    rake (12.3.3)
     rchardet (1.8.0)
     rdoc (3.12)
       json (~> 1.4)
