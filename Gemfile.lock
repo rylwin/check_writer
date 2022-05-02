@@ -16,7 +16,6 @@ GEM
       git (>= 1.2.5)
       rake
       rdoc
-    json (1.8.3)
     linguistics (2.1.0)
       loggability (~> 0.11)
     loggability (0.11.0)
@@ -32,8 +31,7 @@ GEM
       ttfunk (~> 1.0.2)
     rake (10.0.3)
     rchardet (1.8.0)
-    rdoc (3.12)
-      json (~> 1.4)
+    rdoc (6.3.1)
     rspec (2.8.0)
       rspec-core (~> 2.8.0)
       rspec-expectations (~> 2.8.0)
@@ -55,5 +53,5 @@ DEPENDENCIES
   linguistics
   prawn (>= 0.12.0)
   rake
-  rdoc (~> 3.12)
+  rdoc (~> 6.3)
   rspec (~> 2.8.0)
