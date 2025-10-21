@@ -1,5 +1,11 @@
+# encoding: utf-8
+
+# Set default encoding to UTF-8 for Ruby 3 compatibility with linguistics gem
+Encoding.default_external = Encoding::UTF_8
+Encoding.default_internal = Encoding::UTF_8
+
 require 'prawn'
-require 'prawn/layout' # only needed for versions <= 0.6.3
+require 'prawn/table'
 require 'active_support/all'
 
 require 'linguistics'
