@@ -22,6 +22,7 @@ Jeweler::Tasks.new do |gem|
   gem.email = "ryan@thewinograds.com"
   gem.authors = ["Ryan Winograd"]
   gem.required_ruby_version = '>= 3.0.0'
+  gem.executables = ['check_writer']
   # dependencies defined in Gemfile
 end
 Jeweler::RubygemsDotOrgTasks.new

@@ -13,6 +13,7 @@ Gem::Specification.new do |s|
   s.date = "2015-08-03"
   s.description = "Ruby library for generating PDF checks that you can take to the bank"
   s.email = "ryan@thewinograds.com"
+  s.executables = ["check_writer"]
   s.extra_rdoc_files = [
     "LICENSE.txt",
     "README.rdoc"
@@ -26,6 +27,7 @@ Gem::Specification.new do |s|
     "README.rdoc",
     "Rakefile",
     "VERSION",
+    "bin/check_writer",
     "check_writer.gemspec",
     "lib/check_writer.rb",
     "lib/check_writer/attribute_formatting.rb",

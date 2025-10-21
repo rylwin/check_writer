@@ -1,0 +1,172 @@
+#!/usr/bin/env ruby
+
+require 'optparse'
+require 'date'
+
+# Add lib directory to load path
+$LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
+require 'check_writer'
+
+options = {
+  date: Date.today,
+  void: false,
+  blank: false,
+  with_stubs: false,
+  second_signature_line: false
+}
+
+parser = OptionParser.new do |opts|
+  opts.banner = "Usage: check_writer [options]"
+  opts.separator ""
+  opts.separator "Generate a PDF check with the specified options."
+  opts.separator ""
+  opts.separator "Required options:"
+
+  opts.on("-n", "--number NUMBER", "Check number") do |v|
+    options[:number] = v
+  end
+
+  opts.on("-p", "--payee-name NAME", "Payee name (who receives the check)") do |v|
+    options[:payee_name] = v
+  end
+
+  opts.on("-r", "--routing-number NUMBER", "Bank routing number") do |v|
+    options[:routing_number] = v
+  end
+
+  opts.on("-a", "--account-number NUMBER", "Bank account number") do |v|
+    options[:account_number] = v
+  end
+
+  opts.on("-m", "--amount AMOUNT", "Check amount (e.g., 1234.56)") do |v|
+    options[:amount] = v
+  end
+
+  opts.on("-o", "--output FILE", "Output PDF file path") do |v|
+    options[:output] = v
+  end
+
+  opts.separator ""
+  opts.separator "Payor options (you, the check writer):"
+
+  opts.on("--payor-name NAME", "Payor name (check writer)") do |v|
+    options[:payor_name] = v
+  end
+
+  opts.on("--payor-address LINES", "Payor address (comma-separated lines)") do |v|
+    options[:payor_address] = v.split(',').map(&:strip)
+  end
+
+  opts.separator ""
+  opts.separator "Payee options (recipient):"
+
+  opts.on("--payee-address LINES", "Payee address (comma-separated lines)") do |v|
+    options[:payee_address] = v.split(',').map(&:strip)
+  end
+
+  opts.separator ""
+  opts.separator "Bank options:"
+
+  opts.on("-b", "--bank-name NAME", "Bank name") do |v|
+    options[:bank_name] = v
+  end
+
+  opts.on("--bank-address LINES", "Bank address (comma-separated lines)") do |v|
+    options[:bank_address] = v.split(',').map(&:strip)
+  end
+
+  opts.on("--bank-fraction FRACTION", "Bank fraction (e.g., 12-9876/1234)") do |v|
+    options[:bank_fraction] = v
+  end
+
+  opts.separator ""
+  opts.separator "Optional fields:"
+
+  opts.on("-d", "--date DATE", "Check date (default: today, format: YYYY-MM-DD)") do |v|
+    options[:date] = Date.parse(v)
+  end
+
+  opts.on("--memo TEXT", "Memo text") do |v|
+    options[:memo] = v
+  end
+
+  opts.separator ""
+  opts.separator "Additional options:"
+
+  opts.on("--with-stubs", "Include check stubs") do
+    options[:with_stubs] = true
+  end
+
+  opts.on("--void", "Mark check as void") do
+    options[:void] = true
+  end
+
+  opts.on("--blank", "Generate blank check (no check portion)") do
+    options[:blank] = true
+  end
+
+  opts.on("--signature-image FILE", "Path to signature image (JPG or PNG)") do |v|
+    options[:signature_image_file] = v
+  end
+
+  opts.on("--second-signature-line", "Add second signature line") do
+    options[:second_signature_line] = true
+  end
+
+  opts.separator ""
+  opts.separator "Common options:"
+
+  opts.on("-h", "--help", "Show this help message") do
+    puts opts
+    exit
+  end
+
+  opts.on("-v", "--version", "Show version") do
+    puts "check_writer version #{File.read(File.expand_path('../../VERSION', __FILE__)).strip}"
+    exit
+  end
+end
+
+begin
+  parser.parse!
+rescue OptionParser::InvalidOption, OptionParser::MissingArgument => e
+  puts "Error: #{e.message}"
+  puts ""
+  puts parser
+  exit 1
+end
+
+# Validate required options
+required = [:number, :payee_name, :routing_number, :account_number, :amount, :output]
+missing = required.select { |opt| options[opt].nil? || options[opt].empty? }
+
+if missing.any?
+  puts "Error: Missing required options: #{missing.map { |o| "--#{o.to_s.gsub('_', '-')}" }.join(', ')}"
+  puts ""
+  puts parser
+  exit 1
+end
+
+# Validate signature image file exists if provided
+if options[:signature_image_file] && !File.exist?(options[:signature_image_file])
+  puts "Error: Signature image file not found: #{options[:signature_image_file]}"
+  exit 1
+end
+
+# Generate the check
+begin
+  output_file = options.delete(:output)
+
+  check = CheckWriter::Check.new(options)
+  pdf_data = check.to_pdf
+
+  File.open(output_file, 'wb') do |f|
+    f.write(pdf_data)
+  end
+
+  puts "Check generated successfully: #{output_file}"
+rescue => e
+  puts "Error generating check: #{e.message}"
+  puts e.backtrace if ENV['DEBUG']
+  exit 1
+end
