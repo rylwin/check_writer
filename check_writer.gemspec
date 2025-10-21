@@ -8,6 +8,7 @@ Gem::Specification.new do |s|
   s.version = "0.4.8"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
+  s.required_ruby_version = '>= 3.0.0'
   s.authors = ["Ryan Winograd"]
   s.date = "2015-08-03"
   s.description = "Ruby library for generating PDF checks that you can take to the bank"

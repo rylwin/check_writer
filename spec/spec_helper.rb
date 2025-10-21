@@ -30,7 +30,7 @@ def write_content_to_file(file, content)
   puts "WARINING: Writing asset file"
   puts "*" * 80
 
-  f = File.new(asset_path(file), 'w')
+  f = File.new(asset_path(file), 'wb')
   f.write content
   f.close
   true

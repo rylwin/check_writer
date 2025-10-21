@@ -21,6 +21,7 @@ Jeweler::Tasks.new do |gem|
   gem.description = %Q{Ruby library for generating PDF checks that you can take to the bank}
   gem.email = "ryan@thewinograds.com"
   gem.authors = ["Ryan Winograd"]
+  gem.required_ruby_version = '>= 3.0.0'
   # dependencies defined in Gemfile
 end
 Jeweler::RubygemsDotOrgTasks.new

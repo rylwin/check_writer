@@ -1,5 +1,7 @@
+# encoding: utf-8
+
 require 'prawn'
-require 'prawn/layout' # only needed for versions <= 0.6.3
+require 'prawn/table'
 require 'active_support/all'
 
 require 'linguistics'
