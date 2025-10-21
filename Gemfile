@@ -5,7 +5,7 @@ source "https://rubygems.org"
 
 ruby '>= 3.0.0'
 
-gem 'activesupport'
+gem 'activesupport', '~> 7.0'
 gem 'prawn', '>= 0.12.0'
 gem 'prawn-table'
 gem 'linguistics'
@@ -18,4 +18,6 @@ group :development do
   gem "rspec"
   gem "rdoc"
   gem "bundler"
+  gem "mini_magick"  # For PDF to image conversion and pixel comparison
+  gem "chunky_png"   # For pixel-level image comparison
 end
