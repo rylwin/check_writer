@@ -9,6 +9,9 @@ gem 'activesupport'
 gem 'prawn', '>= 0.12.0'
 gem 'prawn-table'
 gem 'linguistics'
+gem 'sinatra'
+gem 'sinatra-cors'
+gem 'json'
 
 # Add dependencies to develop your gem here.
 # Include everything needed to run rake, tests, features, etc.

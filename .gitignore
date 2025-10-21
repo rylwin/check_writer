@@ -48,3 +48,9 @@ pkg
 
 # For rubinius:
 #*.rbc
+
+# Frontend
+frontend/node_modules
+frontend/build
+frontend/dist
+frontend/.vite

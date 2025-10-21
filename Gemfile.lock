@@ -55,6 +55,7 @@ GEM
       rake
       rdoc
       semver2
+    json (2.15.1)
     jwt (2.10.2)
       base64
     linguistics (2.1.0)
@@ -68,6 +69,8 @@ GEM
     multi_xml (0.7.2)
       bigdecimal (~> 3.1)
     multipart-post (2.4.1)
+    mustermann (3.0.4)
+      ruby2_keywords (~> 0.0.1)
     nokogiri (1.18.10-aarch64-linux-gnu)
       racc (~> 1.4)
     nokogiri (1.18.10-aarch64-linux-musl)
@@ -102,6 +105,9 @@ GEM
       stringio
     racc (1.8.1)
     rack (2.2.20)
+    rack-protection (3.2.0)
+      base64 (>= 0.1.0)
+      rack (~> 2.2, >= 2.2.4)
     rake (13.3.0)
     rchardet (1.10.0)
     rdoc (6.15.0)
@@ -123,10 +129,18 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.13.0)
     rspec-support (3.13.6)
+    ruby2_keywords (0.0.5)
     securerandom (0.4.1)
     semver2 (3.4.2)
+    sinatra (3.2.0)
+      mustermann (~> 3.0)
+      rack (~> 2.2, >= 2.2.4)
+      rack-protection (= 3.2.0)
+      tilt (~> 2.0)
+    sinatra-cors (1.2.0)
     stringio (3.1.7)
     thread_safe (0.3.6)
+    tilt (2.6.1)
     tsort (0.2.0)
     ttfunk (1.8.0)
       bigdecimal (~> 3.1)
@@ -141,12 +155,15 @@ DEPENDENCIES
   activesupport
   bundler
   jeweler
+  json
   linguistics
   prawn (>= 0.12.0)
   prawn-table
   rake
   rdoc
   rspec
+  sinatra
+  sinatra-cors
 
 RUBY VERSION
    ruby 3.3.6p108
