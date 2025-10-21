@@ -12,6 +12,7 @@ gem 'linguistics'
 gem 'sinatra'
 gem 'sinatra-cors'
 gem 'json'
+gem 'webrick'
 
 # Add dependencies to develop your gem here.
 # Include everything needed to run rake, tests, features, etc.

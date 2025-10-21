@@ -147,6 +147,7 @@ GEM
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     uri (1.0.4)
+    webrick (1.9.1)
 
 PLATFORMS
   ruby
@@ -164,6 +165,7 @@ DEPENDENCIES
   rspec
   sinatra
   sinatra-cors
+  webrick
 
 RUBY VERSION
    ruby 3.3.6p108
