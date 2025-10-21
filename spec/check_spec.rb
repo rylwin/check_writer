@@ -34,12 +34,12 @@ describe "CheckWriter::Check" do
   end
 
   it "knows how many dollars and cents" do
-    @check.dollars.should == 1_000_003
-    @check.cents.should == 23
+    expect(@check.dollars).to eq(1_000_003)
+    expect(@check.cents).to eq(23)
   end
 
   it "can format the amount as currency" do
-    @check.formatted_amount.should == "$1,000,003.23"
+    expect(@check.formatted_amount).to eq("$1,000,003.23")
   end
 
   context "a check for an amount with 0 cents" do
@@ -47,12 +47,12 @@ describe "CheckWriter::Check" do
       @check.amount = 410.0
     end
     it "should includes two zeros in the cents" do
-      @check.formatted_amount.should == "$410.00"
+      expect(@check.formatted_amount).to eq("$410.00")
     end
   end
 
   it "assigns the number" do
-    @check.number.should == '12345'
+    expect(@check.number).to eq('12345')
   end
 
   it "generates pdf correctly" do
@@ -107,7 +107,7 @@ describe "CheckWriter::Check" do
   end
 
   it "raises exception when stub_format invalid" do
-    expect { @check.stub_format = :wrong }.to raise_error
+    expect { @check.stub_format = :wrong }.to raise_error(RuntimeError)
     expect { @check.stub_format = :two_thirds }.to_not raise_error
   end
 
@@ -179,7 +179,7 @@ describe "CheckWriter::Check" do
 
   context "#to_prawn" do
     it "returns a prawn object" do
-      @check.to_prawn.should be_a_kind_of(Prawn::Document)
+      expect(@check.to_prawn).to be_a_kind_of(Prawn::Document)
     end
 
     it "can be used to print multiple checks" do

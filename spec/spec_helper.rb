@@ -22,12 +22,12 @@ def asset_path(file)
 end
 
 def assert_data_matches_file_content(file, data)
-  data.bytes.to_a.should == File.open(asset_path(file)).read.bytes.to_a
+  expect(data.bytes.to_a).to eq(File.open(asset_path(file)).read.bytes.to_a)
 end
 
 def write_content_to_file(file, content)
   puts "*" * 80
-  puts "WARINING: Writing asset file"
+  puts "WARNING: Writing asset file"
   puts "*" * 80
 
   f = File.new(asset_path(file), 'wb')
